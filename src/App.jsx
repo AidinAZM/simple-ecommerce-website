@@ -1,22 +1,21 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css'
-import Shop from './pages/shop/shop';
-import Nav from './components/Nav';
-import { CartProvider } from './context/CartContext';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Shop from "./pages/shop/shop";
+import Nav from "./components/Nav";
+import { CartProvider } from "./context/CartContext";
 
-function App(){
+function App() {
   return (
-      <Router>
+    <Router>
       <CartProvider>
         <Nav />
-        
-        <Routes>
-          <Route path='/'  element={<Shop/>} />
-        </Routes>
 
+        <Routes>
+          <Route path="/" element={<Shop />} />
+        </Routes>
       </CartProvider>
-      </Router>
+    </Router>
   );
 }
 
-export default App
+export default App;

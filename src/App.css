@@ -1,5 +1,6 @@
- #root {
+#root {
   max-width: 1280px;
+  min-width: 500px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -38,10 +39,28 @@
   }
 }
 
+@media only screen and (max-width: 768px) {
+  .responsiveNav {
+    display: none;
+  }
+  .hamburgerMenu {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .responsiveNav {
+    display: flex;
+  }
+  .hamburgerMenu {
+    display: none;
+  }
+}
+
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
   color: #888;
-} 
+}
