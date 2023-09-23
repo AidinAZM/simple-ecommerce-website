@@ -7,7 +7,6 @@ import {
   message,
   Divider,
   Space,
-  Empty,
   Button,
   Drawer,
 } from "antd";
@@ -20,11 +19,13 @@ import {
 import { CartContext } from "../context/CartContext";
 import CartProduct from "./CartProduct";
 import Search from "antd/es/input/Search";
+import LoginForm from "./LoginForm";
 
 export default function Nav() {
   //states for Cart modal
 
   const [open, setOpen] = useState(false);
+
   const showDrawer = () => {
     setOpen(true);
   };
@@ -40,7 +41,11 @@ export default function Nav() {
 
   const handleOk = () => {
     setIsModalOpen(false);
-    message.success("سفارش با موفقیت ثبت شد");
+    {
+      productsCount > 0
+        ? message.success("سفارش با موفقیت ثبت شد")
+        : message.error("سبد خرید خالی است");
+    }
   };
 
   const handleCancel = () => {
@@ -50,24 +55,38 @@ export default function Nav() {
   //states for Login modal
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const showLoginModal = () => {
+  const [loginMessage, setLoginMessage] = useState("با موفقیت وارد شدید ");
+
+  const [isRegisterForm, setIsRegisterForm] = useState(false);
+  const handleRegister = () => {
+    setIsRegisterForm(true);
+    setLoginMessage("ثبت نام با موفقیت انجام شد");
+  };
+
+  const handleLoginState = () => {
+    setIsRegisterForm(false);
+    setLoginMessage("با موفقیت وارد شدید ");
+  };
+
+  const handleLoginModal = () => {
     setIsLoginModalOpen(true);
     setOpen(false);
   };
 
   const handleLoginOk = () => {
     setIsLoginModalOpen(false);
-    message.success("با موفقیت وارد شدید ");
+    message.success(loginMessage);
   };
 
   const handleLoginCancel = () => {
     setIsLoginModalOpen(false);
+    handleLoginState;
   };
 
   const onSearch = (value) => console.log(value);
 
   const cart = useContext(CartContext);
-  const productsCount = cart.items.reduce(
+  let productsCount = cart.items.reduce(
     (sum, product) => sum + product.quantity,
     0
   );
@@ -133,23 +152,20 @@ export default function Nav() {
           <Menu.Item key={"userAcc"}>
             <UserOutlined
               style={{ fontSize: "23px" }}
-              onClick={showLoginModal}
+              onClick={handleLoginModal}
             />
 
             {/* Login Modal */}
-
-            <Modal
-              title={
-                <h4 style={{ textAlign: "center" }}>ورود به حساب کاربری</h4>
-              }
-              open={isLoginModalOpen}
-              onOk={handleLoginOk}
-              onCancel={handleLoginCancel}
-              okText="ورود"
-              cancelText="بازگشت"
-            >
-              <Empty />
-            </Modal>
+            {isLoginModalOpen && (
+              <LoginForm
+                isLoginModalOpen={isLoginModalOpen}
+                handleLoginOk={handleLoginOk}
+                handleLoginCancel={handleLoginCancel}
+                isRegisterForm={isRegisterForm}
+                handleRegister={handleRegister}
+                handleLoginState={handleLoginState}
+              />
+            )}
           </Menu.Item>
         </Space>
 
@@ -188,12 +204,10 @@ export default function Nav() {
               <ShoppingCartOutlined style={{ fontSize: "20px" }} />
               <span style={{ fontWeight: "bold" }}>سبد خرید</span>
             </Button>
+
             <Divider />
-            <Button type="text" block onClick={showLoginModal}>
-              <UserOutlined
-                style={{ fontSize: "20px" }}
-                onClick={showLoginModal}
-              />
+            <Button type="text" block onClick={handleLoginModal}>
+              <UserOutlined style={{ fontSize: "20px" }} />
               <span style={{ fontSize: "12px", fontWeight: "bold" }}>
                 ورود به حساب کاربری
               </span>
