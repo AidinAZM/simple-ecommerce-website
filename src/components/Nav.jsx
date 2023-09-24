@@ -17,7 +17,7 @@ import {
   MenuOutlined,
 } from "@ant-design/icons";
 import { CartContext } from "../context/CartContext";
-import CartProduct from "./CartProduct";
+import Cart from "./Cart";
 import Search from "antd/es/input/Search";
 import LoginForm from "./LoginForm";
 
@@ -128,11 +128,11 @@ export default function Nav() {
                   {productsCount > 0 ? (
                     <>
                       {cart.items.map((item) => (
-                        <CartProduct
+                        <Cart
                           key={item.id}
                           id={item.id}
                           quantity={item.quantity}
-                        ></CartProduct>
+                        />
                       ))}
                       <h4 className="my-4" style={{ textAlign: "center" }}>
                         {" "}

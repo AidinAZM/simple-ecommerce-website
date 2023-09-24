@@ -1,13 +1,22 @@
-import { Card, Space } from "antd";
-import { useContext } from "react";
+import { Card, Image, Rate, Space } from "antd";
+import { useContext, useState } from "react";
 
 import { CartContext } from "../context/CartContext";
 import { DeleteOutlined } from "@ant-design/icons";
+import { getProductData } from "../data/Products";
 
 function ProductCard(props) {
   const cart = useContext(CartContext);
 
   const productQuantity = cart.getProductQuantity(props.data.id);
+
+  const [starValue, setStarValue] = useState(2.5);
+
+  console.log(starValue, props.data.productName);
+
+  getProductData(props.data.id).starRate = starValue;
+
+  console.log(getProductData(props.data.id));
 
   return (
     <Card
@@ -19,13 +28,28 @@ function ProductCard(props) {
         backgroundColor: "#F5F5F5",
       }}
     >
-      <img
+      <Image
+        width={150}
+        height={110}
+        src={props.data.productImageAddress}
+        className="img-fluid rounded"
+      />
+      {/* <img
         src={props.data.productImageAddress}
         alt={props.data.productName}
         className="img-fluid rounded"
-      />
-      <h5>{props.data.productName}</h5>
+      /> */}
+      <h5 style={{ marginTop: "8px" }}>{props.data.productName}</h5>
       <p> Price: {`$${props.data.price}`}</p>
+
+      <Rate
+        allowHalf
+        defaultValue={2.5}
+        style={{ marginBottom: "10px" }}
+        value={starValue}
+        onChange={setStarValue}
+      />
+
       {productQuantity > 0 ? (
         <>
           <Space>
