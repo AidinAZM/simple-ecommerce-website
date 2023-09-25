@@ -91,6 +91,8 @@ export default function Nav() {
     0
   );
 
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <ConfigProvider direction="ltr">
       <Menu
@@ -175,8 +177,9 @@ export default function Nav() {
               dir="rtl"
               placeholder="نام کالای موردنظر را وارد کنید..."
               onSearch={onSearch}
-              className="searchBar"
-              style={{ width: "300px" }}
+              className={isFocused ? "searchBar-focused" : "searchBar"}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
             />
           </Space>
         </Menu.Item>

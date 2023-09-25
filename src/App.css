@@ -59,14 +59,42 @@
 
 @media only screen and (max-width: 550px) {
   .searchBar {
-    width: 200px !important;
+    width: 220px !important;
+    transition: 0.5s;
   }
+  .searchBar-focused {
+    width: 260px !important;
+    transition: 0.5s;
+  }
+
   .hamburgerIcon {
     padding: auto !important;
   }
   #root {
     padding-right: 0 !important;
     padding-left: 0 !important;
+  }
+}
+
+@media only screen and (min-width: 550px) {
+  .searchBar {
+    width: 300px !important;
+    transition: 0.5s;
+  }
+  .searchBar-focused {
+    width: 360px !important;
+    transition: 0.5s;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  .searchBar {
+    width: 190px !important;
+    transition: 0.3s;
+  }
+  .searchBar-focused {
+    width: 230px !important;
+    transition: 0.3s;
   }
 }
 
