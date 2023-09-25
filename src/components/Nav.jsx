@@ -175,14 +175,15 @@ export default function Nav() {
               dir="rtl"
               placeholder="نام کالای موردنظر را وارد کنید..."
               onSearch={onSearch}
-              style={{ width: 300 }}
+              className="searchBar"
+              style={{ width: "300px" }}
             />
           </Space>
         </Menu.Item>
         <Menu.Item
           key={"hamburger"}
           disabled
-          className="px-1 mx-1"
+          className="hamburgerIcon"
           style={{ position: "absolute", right: 0, top: 0 }}
         >
           <Button type="text" onClick={showDrawer} className="hamburgerMenu">

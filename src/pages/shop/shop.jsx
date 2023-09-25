@@ -78,6 +78,7 @@ export default function Shop() {
               lg={6}
               xl={4}
               className="mx-5 mt-3"
+              style={{ display: "flex", justifyContent: "center" }}
               key={productData.id}
             >
               <ProductCard key={productData.id} data={productData} />

@@ -1,6 +1,6 @@
 #root {
   max-width: 1280px;
-  min-width: 500px;
+  min-width: 375px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -44,7 +44,7 @@
     display: none;
   }
   .hamburgerMenu {
-    display: block;
+    display: flex;
   }
 }
 
@@ -54,6 +54,19 @@
   }
   .hamburgerMenu {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .searchBar {
+    width: 200px !important;
+  }
+  .hamburgerIcon {
+    padding: auto !important;
+  }
+  #root {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
   }
 }
 
