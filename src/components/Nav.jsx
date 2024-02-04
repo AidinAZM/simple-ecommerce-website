@@ -219,7 +219,11 @@ export default function Nav() {
           </Drawer>
         </Menu.Item>
         <Menu.Item key={"brand"}>
-          <a href="/" style={{ fontSize: "20px" }} className="responsiveNav">
+          <a
+            href="/register.php"
+            style={{ fontSize: "20px" }}
+            className="responsiveNav"
+          >
             {" "}
             نام فروشگاه اینترنتی{" "}
           </a>
