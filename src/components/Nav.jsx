@@ -9,6 +9,7 @@ import {
   Space,
   Button,
   Drawer,
+  Form,
 } from "antd";
 import {
   HomeOutlined,
@@ -20,6 +21,10 @@ import { CartContext } from "../context/CartContext";
 import Cart from "./Cart";
 import Search from "antd/es/input/Search";
 import LoginForm from "./LoginForm";
+import { getProductData } from "../data/Products";
+import { checkUser } from "../services/apiCheckUser";
+import { InsertUser } from "../services/apiInsertNewUser";
+import { setOrder } from "../services/apiSetOrder";
 
 export default function Nav() {
   //states for Cart modal
@@ -38,9 +43,15 @@ export default function Nav() {
     setIsModalOpen(true);
     setOpen(false);
   };
-
+  //////////////////////////////////////////////
   const handleOk = () => {
     setIsModalOpen(false);
+    let i = 0;
+    cart.items.map(() => {
+      console.log(getProductData(cart.items[i].id));
+      setOrder(getProductData(cart.items[i].id));
+      i++;
+    });
     {
       productsCount > 0
         ? message.success("سفارش با موفقیت ثبت شد")
@@ -73,9 +84,31 @@ export default function Nav() {
     setOpen(false);
   };
 
+  const [form] = Form.useForm();
+
+  // Instead of Loging the Form data to the Console => fetch it to DB
   const handleLoginOk = () => {
-    setIsLoginModalOpen(false);
-    message.success(loginMessage);
+    form.validateFields().then((values) => {
+      form.resetFields();
+      console.log("Received values of form: ");
+      if (values.email != undefined) {
+        InsertUser(values);
+        handleRegister;
+        setIsLoginModalOpen(false);
+        message.success(loginMessage);
+      } else {
+        checkUser(values).then((res) => {
+          console.log(res);
+          if (res === true) {
+            setIsLoginModalOpen(false);
+            handleLoginState();
+            message.success(loginMessage);
+          } else if (res === false) {
+            message.error("نام کاربری یا رمز عبور اشتباه است");
+          }
+        });
+      }
+    });
   };
 
   const handleLoginCancel = () => {
@@ -166,6 +199,7 @@ export default function Nav() {
                 isRegisterForm={isRegisterForm}
                 handleRegister={handleRegister}
                 handleLoginState={handleLoginState}
+                form={form}
               />
             )}
           </Menu.Item>

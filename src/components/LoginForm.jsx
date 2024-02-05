@@ -4,7 +4,7 @@ import {
   MailOutlined,
   ArrowLeftOutlined,
 } from "@ant-design/icons";
-import { Checkbox, ConfigProvider, Form, Input, Modal } from "antd";
+import { ConfigProvider, Form, Input, Modal } from "antd";
 
 export default function LoginForm({
   isLoginModalOpen,
@@ -13,14 +13,21 @@ export default function LoginForm({
   isRegisterForm,
   handleRegister,
   handleLoginState,
+  form,
 }) {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const handleFormFinish = (values) => {
+    console.log("Success:", values);
   };
 
   return (
     <Modal
-      title={<h4 style={{ textAlign: "center" }}>ورود به حساب کاربری</h4>}
+      title={
+        !isRegisterForm ? (
+          <h4 style={{ textAlign: "center" }}>ورود به حساب کاربری</h4>
+        ) : (
+          <h4 style={{ textAlign: "center" }}>فرم ثبت نام</h4>
+        )
+      }
       open={isLoginModalOpen}
       onOk={handleLoginOk}
       onCancel={handleLoginCancel}
@@ -36,12 +43,10 @@ export default function LoginForm({
       )}
       <ConfigProvider direction="rtl">
         <Form
+          form={form}
           name="normal_login"
           className=" mt-5"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
+          onFinish={handleFormFinish}
           style={{ position: "relative" }}
         >
           <Form.Item
@@ -71,24 +76,12 @@ export default function LoginForm({
             />
           </Form.Item>
           {!isRegisterForm ? (
-            <>
-              <Form.Item>
-                <Form.Item name="remember" valuePropName="checked" noStyle>
-                  <Checkbox>Remember me</Checkbox>
-                </Form.Item>
-
-                <a href="#" style={{ position: "absolute", right: 0 }}>
-                  فراموشی رمز عبور
-                </a>
-              </Form.Item>
-
-              <Form.Item style={{ position: "absolute" }}>
-                یا{" "}
-                <a href="#" onClick={handleRegister}>
-                  همین الان ثبت نام کنید
-                </a>
-              </Form.Item>
-            </>
+            <Form.Item style={{ position: "absolute" }}>
+              یا{" "}
+              <a href="#" onClick={handleRegister}>
+                همین الان ثبت نام کنید
+              </a>
+            </Form.Item>
           ) : (
             <Form.Item
               name="email"
